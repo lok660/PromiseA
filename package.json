@@ -1,0 +1,19 @@
+{
+  "name": "promisea",
+  "version": "1.0.0",
+  "description": "手写原生Promise,参照Promise/A+",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lok660/PromiseA.git"
+  },
+  "author": "lok660",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lok660/PromiseA/issues"
+  },
+  "homepage": "https://github.com/lok660/PromiseA#readme"
+}

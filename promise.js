@@ -104,3 +104,47 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
 
   return promise2
 }
+
+/**
+ * 根据上一个then的结果解析Promise
+ * @param {Object} promise2 新Promise对象
+ * @param {Object} x 上一个then的返回值
+ * @param {Function} resolve 新Promise的成功回调
+ * @param {Function} reject 新Promise的失败回调
+ */
+function resolvePromise (promise2, x, resolve, reject) {
+  if (promise2 === x) {
+    reject(new TypeError('Promise发生了循环引用'))
+  }
+
+  let called = false  //  调用标记,防止成功和失败都调用
+  if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
+    //  上一个then的值是 对象或函数
+    try {
+      let then = x.then
+      if (typeof then === 'function') {
+        //  如果是Promise就执行它,继续递归
+        then.call(x, (y) => {
+          if (called) return
+          called = true //  调用过了,将标记更新
+          resolvePromise(promise2, y, resolve, reject)
+        }, (r) => {
+          if (called) return
+          called = true //  调用过了,将标记更新
+          reject(r)
+        })
+      } else {
+        resolve(x)
+      }
+    } catch (error) {
+      if (called) return
+      called = true //  调用过了,将标记更新
+      reject(error)
+    }
+  } else {
+    //  then的值是 普通值 
+    resolve(x)
+  }
+}
+
+module.exports = Promise

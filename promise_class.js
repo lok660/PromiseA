@@ -121,7 +121,6 @@ class Promise {
               })
             })
 
-
           this.rejectedCallbacks.push(
             () => {
               setTimeout(() => {
@@ -133,7 +132,6 @@ class Promise {
                 }
               })
             })
-
 
           break;
         }
